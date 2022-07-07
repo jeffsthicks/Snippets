@@ -17,10 +17,10 @@ function texReader($fileLocation) {
             if (preg_match('/name:"(.*)"/',$line,$matches)==1){
                 $name=$matches[1];
                 $name = preg_replace("/\\$([^\\$]*)\\$/","\($1\)",$name);}
-            if (preg_match('/type:(.*)./',$line,$matches)==1){
+            if (preg_match('/type:"(.*)"/',$line,$matches)==1){
                 $type=$matches[1];
             }
-            if (preg_match('/label:(.*)./',$line,$matches)==1){
+            if (preg_match('/label:"(.*)"/',$line,$matches)==1){
                 $label=$matches[1];
             }
             if (preg_match('/caption:"(.*)"/',$line,$matches)==1){
