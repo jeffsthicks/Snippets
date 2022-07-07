@@ -27,7 +27,7 @@ function texReader($fileLocation) {
                 $caption=$matches[1];
                 $caption = preg_replace("/\\$([^\\$]*)\\$/","\($1\)",$caption);
             }
-            if (preg_match('/source:(.*)./',$line,$matches)==1){
+            if (preg_match('/source:"(.*)"/',$line,$matches)==1){
                 $sourceTag=$matches[1];
             }
             if (preg_match('/sourceDetail:"(.*)"/',$line,$matches)==1){
