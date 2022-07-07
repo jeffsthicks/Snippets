@@ -1,0 +1,81 @@
+
+
+\usepackage{amsmath,amsthm,amsfonts,amssymb,epsfig, titlesec, epsfig, float, caption, mathrsfs}
+\usepackage{hyperref}
+\usepackage{tikz-cd}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{xcolor}
+\usepackage{verbatim}
+\usepackage{accents}
+\usepackage{marvosym}
+\usepackage[citestyle=alphabetic,bibstyle=alphabetic,backend=bibtex]{biblatex}
+\usepackage{todonotes}
+\usepackage[american]{babel}
+
+%\renewbibmacro{in:}{}
+
+\usetikzlibrary{calc, decorations.pathreplacing,shapes.misc}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage[left=1in,top=1in,right=1in]{geometry}
+\usepackage[capitalize]{cleveref}
+\usepackage{subcaption}
+
+
+
+
+\newcommand{\mathcolorbox}[2]{\colorbox{#1}{$\displaystyle #2$}}
+\newcommand{\xxx}{T base with combinatorial potential data }
+\newcommand{\Xxx}{T base with combinatorial potential data }
+\newcommand{\xxxc}{combinatorial potential stratified space }
+\newcommand{\Xxxc}{combinatorial potential stratified space }
+\newcommand{\argument}{symplectic character }
+\newcommand{\arguments}{symplectic characters }
+\newcommand{\snip}[2]{#1}
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lem}[theorem]{Lemma}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{question}[theorem]{Question}
+
+
+\theoremstyle{remark} 
+\newtheorem{rem}[theorem]{Remark}
+\newtheorem{remark}[theorem]{Remark}
+ \crefname{rem}{Remark}{Remarks}
+ \Crefname{rem}{Remark}{Remarks}
+ \newtheorem{exercise}[theorem]{Exercise}
+ \newtheorem{example}[theorem]{Example}
+ \newenvironment{construction}{}{}
+ \newenvironment{exposition}{}{}
+ \newenvironment{application}{}{}
+
+\theoremstyle{definition} 
+\newtheorem{df}[theorem]{Definition} 
+\newtheorem{definition}[theorem]{Definition} 
+
+\titleformat*{\section}{\normalsize \bfseries \filcenter}
+\titleformat*{\subsection}{\normalsize \bfseries }
+\captionsetup{labelsep=period}
+
+
+\newtheorem{mainthm}{Theorem}
+\Crefname{mainthm}{Theorem}{Theorems}
+\newtheorem{maincor}[mainthm]{Corollary}
+\Crefname{maincor}{Corollary}{Corollaries}
+
+
+\renewcommand*{\themainthm}{\Alph{mainthm}}
+
+
+\makeatletter
+\def\namedlabel#1#2{\begingroup
+   \def\@currentlabel{#2}%
+   \label{#1}\endgroup
+}
+\makeatother

@@ -1,0 +1,183 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size:12pt;
+  text-align: justify;
+  line-height: 1.5;
+}
+
+/* Style the header */
+header {
+  position: fixed; /* Fixed header (stay in place on scroll) */
+  background-color: #666;
+  padding: 2px;
+  width:100%;
+  text-align: center;
+  font-size: 15px;
+  color: white;
+  z-index: 1;
+}
+
+
+/* Create two columns/boxes that floats next to each other */
+nav {
+  width: 25%; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 15%; /* Stay at the top */
+  left: 3%;
+  background-color: #f1f1f1; /* white */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+
+}
+
+
+nav a {text-decoration:none;color:#000000;}
+nav a:hover {color:#979797;}
+
+
+
+/* Style the list inside the menu */
+nav ul {
+  margin-left:10px;
+  list-style-type: none;
+  padding: 0;
+  text-align: left;
+}
+
+article {
+  padding: 20px;
+  width: 60%;
+  margin-left:30%;
+  margin-top:10%;
+  background-color: #f1f1f1;
+}
+
+article  a {text-decoration:underline;color:#000000;}
+article  a:hover {color:#979797;}
+
+
+.anchor{
+  display: block;
+  height: 115px; /*same height as header*/
+  margin-top: -115px; /*same height as header*/
+  visibility: hidden;
+}
+
+
+article img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+mathEnvironment {
+    display: block;
+    margin-top: 1em ;
+}
+
+mathEnvironment.definition {
+    display: block;
+    border-style: solid;
+    border-color:#666;
+  }
+
+
+  mathEnvironment.proposition, mathEnvironment.lemma {
+    display: block;
+    font-style:italic;
+  }
+
+  mathEnvironment.theorem {
+    display: block;
+    font-style:italic;
+    border-style: solid;
+    border-color:#666;
+  }
+
+
+mathEnvironment.example {
+  display: block;
+  background-color: #ccc;
+}
+mathEnvironment.remark {
+  display: block;
+}
+
+mathEnvironment.proof {
+  display: block;
+}
+
+mathEnvironment.proof::after {
+  content: "∎"
+}
+
+/* Clear floats after the columns */
+section::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+figure  {
+  text-align:center;
+}
+
+figure  img {
+  display: inline;
+  margin-left: 3em;
+  margin-right: 3em;
+}
+
+figure figcaption {text-align: center;
+}
+
+
+
+h2.proposition, h2.lemma , h2.example, h2.definition, h2.theorem, h2.exercise{
+  display:inline;
+    font-size: 1em;
+    font-style:normal;
+    margin-top: 1.33em;
+    margin-bottom: 1.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+  }
+
+
+  h2.proof {
+    display:inline;
+      font-size: 1em;
+      margin-left: 0;
+      margin-right: 0;
+      font-style: italic;
+    }
+  h2.proof::after {
+    content: ":"
+  }
+  
+
+/* Style the footer */
+footer {
+  background-color: #777;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+hidden {
+  font-size:0;}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+    
+  }
+}
