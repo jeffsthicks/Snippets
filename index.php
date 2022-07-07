@@ -119,7 +119,7 @@ function texReader($tagName) {
             if (preg_match('/type:(.*)./',$line,$matches)==1){
                 $type=$matches[1];
             }
-            if (preg_match('/label:(.*)./',$line,$matches)==1){
+            if (preg_match('/label:"(.*)"/',$line,$matches)==1){
                 $label=$matches[1];
             }
             if (preg_match('/caption:"(.*)"/',$line,$matches)==1){
