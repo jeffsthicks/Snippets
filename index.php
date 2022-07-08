@@ -105,7 +105,7 @@ function texToHtml($line) {
 
 
 function texReader($tagName) {
-    global $sectionCounter, $theoremCounter, $labelArray,$sectionDepth,$tableOfContents,$pageTitle;
+    global $sectionCounter,$referenceKeys, $theoremCounter, $labelArray,$sectionDepth,$tableOfContents,$pageTitle, $bibArray;
     $sectionDepth++;
     $tagLocation="./tags/".$tagName.".tex";
     $f = fopen($tagLocation, "r");
@@ -126,6 +126,20 @@ function texReader($tagName) {
                 $caption=$matches[1];
                 $caption = preg_replace("/\\$([^\\$]*)\\$/","\($1\)",$caption);
             }
+            if (preg_match('/source:"(.*)"/',$line,$matches)==1){
+                $sourceTag=$matches[1];
+                if (in_array($sourceTag,$referenceKeys)){
+                    
+                }
+                else{
+                $referenceKeys[]=$sourceTag;
+                }
+                $keyText=$bibArray['#'.$sourceTag];
+            }
+            
+            if (preg_match('/sourceDetail:"(.*)"/',$line,$matches)==1){
+                $sourceDetail=$matches[1];
+            }
         }
         if (isset($name)==False)
             {$name="NONAME";}
@@ -134,7 +148,14 @@ function texReader($tagName) {
         if (isset($label)==False)
             {$label="NOLABEL";}
         if (isset($caption)==False)
-            {$caption="NOLABEL";}
+            {$caption="WARNING:NOCAPTION";}
+        if (isset($sourceTag)==False)
+            {$source="";}
+        else{
+            if (isset($sourceDetail)==False){$source="<a href=#$sourceTag>[$keyText]</a>";}
+            else{$source="<a href=#$sourceTag>[$sourceDetail of $keyText</a>]";}
+        }
+        
     }
 
     $bodyText="";
@@ -162,7 +183,7 @@ function texReader($tagName) {
     else if (in_array($type,["theorem","definition","proposition","lemma","example","exercise"])){
         $theoremCounter = $theoremCounter +1;
         $thisIndex="$type $sectionCounter[1].$sectionCounter[2].$theoremCounter";
-        $envOpen="<span class='anchor' id='$label'\>\n</span><mathEnvironment class=$type index='$thisIndex'>\n<h2 class=$type>$thisIndex ($name) </h2>  ";
+        $envOpen="<span class='anchor' id='$label'\>\n</span><mathEnvironment class=$type index='$thisIndex'>\n<h2 class=$type>$thisIndex $source</h2>  ";
         $envClose="</mathEnvironment>";
     }
     else if (in_array($type,["figure"])){
@@ -193,13 +214,12 @@ function texReader($tagName) {
     return $bodyText;}
 
     $bodyText= texReader($tagName);
-
-
-
         foreach($labelArray as $label=>$index){
         $regExp="/\\\\cref\{$label\}/";
         $bodyText=preg_replace($regExp,"<a href='#$label'>$index</a>",$bodyText);
-    }
+        }
+        $regExp="/\\\\cref\{(.*)\}/";
+        $bodyText=preg_replace($regExp,"<b>Missing Label ($1)!</b>",$bodyText);
 
 
 ?>
@@ -230,11 +250,11 @@ function texReader($tagName) {
    <?php    
    echo($bodyText); 
 
-
+    sort($referenceKeys);
     echo("<h1> References </h1> \n <table>\n");
     foreach($referenceKeys as $key){
         $keyText=$bibArray['#'.$key];
-        echo("<tr id=\"$key\"> <td> [$keyText ]$bibArray[$key]</td></tr>\n");
+        echo("<tr id=\"$key\"> <td>[$keyText]</td><td>$bibArray[$key]</td></tr>\n");
     }
     echo("</table>");
 ?>
