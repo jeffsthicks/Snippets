@@ -24,8 +24,10 @@
 \def\Spinc{\operatorname{Spin}^c}
 \def\SH{{\operatorname{SH}^\bullet}}
 \def\CF{{\operatorname{CF}^\bullet}}
+\def\Tw{{\operatorname{Tw}}}
 \def\Crit{\operatorname{Crit}}
 \def\into{\hookrightarrow}
+\def\tensor{\otimes}
 \def\CP{\mathbb{CP}}
 \def\eps{\varepsilon}
 \)
