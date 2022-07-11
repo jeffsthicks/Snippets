@@ -10,6 +10,11 @@
  Explicit methods for derived categories of sheaves.
 ",
 "#craw2007explicit"=>"Cra",
+"weinstein1971symplectic"=>"Alan Weinstein.
+ Symplectic manifolds and their Lagrangian submanifolds.
+ <em>Advances in Mathematics</em>, 6(3):329--346, 1971.
+",
+"#weinstein1971symplectic"=>"Wei71",
 "hanlon2022aspects"=>"A&nbsp;Hanlon and J&nbsp;Hicks.
  Aspects of functoriality in homological mirror symmetry for toric
   varieties.
