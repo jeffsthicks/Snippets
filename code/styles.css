@@ -6,55 +6,93 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   font-size:12pt;
+  padding-right:50px;
   text-align: justify;
   line-height: 1.5;
+  margin:0;
 }
 
 /* Style the header */
 header {
   position: fixed; /* Fixed header (stay in place on scroll) */
   background-color: #666;
-  padding: 2px;
+  top:0px;
   width:100%;
   text-align: center;
   font-size: 15px;
   color: white;
-  z-index: 1;
+  z-index: 2;
 }
 
 
 /* Create two columns/boxes that floats next to each other */
-nav {
-  width: 25%; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 15%; /* Stay at the top */
-  left: 3%;
-  background-color: #f1f1f1; /* white */
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
+/* Style the list inside the menu */
 
+
+.menu {
+
+  font-weight: 100;
+  background: #efefef;
+  width: 370px;
+  height: 100%;
+  padding-left: 40px;
+  padding-top:90px;
+  position: fixed;
+  z-index: 1;
+  -webkit-box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.2);
+  box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.2);
+  right: -330px;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
 }
 
+.menu:hover, .menu:focus
+  {
+    transform: translate3d(-330px, 0, 0);
+    animation-timing-function: 1s ease-in;
+  }
+  .title
+  {
+    position:absolute;
+    top:50%;
+    transform: rotate(270deg);
+    left: -20px;
+    font-size: 15px;
 
-nav a {text-decoration:none;color:#000000;}
-nav a:hover {color:#979797;}
+  }
+  .nav
+  {
+    font-weight: 100;
+  }
 
 
 
 /* Style the list inside the menu */
-nav ul {
+.menu ul {
   margin-left:10px;
   list-style-type: none;
   padding: 0;
   text-align: left;
 }
+.menu a
+{
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+}
+.menu a:hover
+{
+  color: #aaa;
+}
+
 
 article {
+
+  max-width:950px;
+	margin:90px auto 100px auto;
+	overflow:auto;
   padding: 20px;
-  width: 60%;
-  margin-left:30%;
-  margin-top:10%;
   background-color: #f1f1f1;
 }
 
@@ -64,8 +102,8 @@ article  a:hover {color:#979797;}
 
 .anchor{
   display: block;
-  height: 115px; /*same height as header*/
-  margin-top: -115px; /*same height as header*/
+  height: 90px; /*same height as header*/
+  margin-top: -90px; /*same height as header*/
   visibility: hidden;
 }
 
@@ -180,4 +218,9 @@ hidden {
     height: auto;
     
   }
+}
+
+
+html{
+  scroll-behavior: smooth
 }

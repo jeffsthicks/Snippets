@@ -13,6 +13,8 @@
 <?php
     // Retrieve the URL variables (using PHP).
     $tagName = $_GET['tag'];
+    if (isset($tagName)==False)
+        {$tagName="main";}
     include("code/preambles/mathpreamble.php");
     include("code/preambles/referenceArray.php");
     $tagName=strval($tagName);
@@ -174,7 +176,7 @@ function texReader($tagName) {
         $headerSize=$sectionDepth+2;
         $envOpen="<span class='anchor' id='$label'\></span>\n<h$headerSize ' index='$thisIndex'> $thisIndex: $name </h$headerSize>";
         $envClose="";
-        $tableOfContents[]=array("depth"=>$sectionDepth, "item"=>"<li> <a href=#$label> $thisIndex:$name </a> </li>");}
+        $tableOfContents[]=array("depth"=>$sectionDepth, "item"=>"<li> <a  href=#$label> $thisIndex:$name </a> </li>");}
         else{$envOpen="";
             $pageTitle=$name;
             $envClose="";}
@@ -230,10 +232,8 @@ function texReader($tagName) {
 ?>
 
 
-
-
-<!Build Table of Contents >
-<nav>
+    <div class="menu">
+    <div class="title">SECTIONS</div>
 <?php
     $currentDepth=0;
     foreach($tableOfContents as $item){
@@ -242,9 +242,12 @@ function texReader($tagName) {
         echo($item["item"]);
         $currentDepth=$item["depth"];
     }
-    echo("Download <a href='./downloadSnippet.php?tag=$tagName'> tex </a>");
+    echo("<a href='./downloadSnippet.php?tag=$tagName'>Download  .tex </a>");
 ?>
-</nav>
+    </ul>
+  </div>
+
+<!Build Table of Contents >
 
 <article>
    <?php    

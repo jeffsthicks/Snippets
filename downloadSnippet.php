@@ -5,7 +5,7 @@ header("Content-Disposition: attachment; filename=\"$tagName.tex\"");
 // Retrieve the URL variables (using PHP).
 
 $fileLocation= "./tags/$tagName.tex";
-
+$texTagName=preg_replace("/\_/","\_",$tagName);
 $sectionDepth=-1;
 function texReader($fileLocation) {
     global $sectionDepth;
@@ -59,7 +59,7 @@ function texReader($fileLocation) {
             for ($i=0;$i<$sectionDepth-1;$i++){$subString=$subString."sub";}
             $envOpen="\\{$subString}section{{$name}}\n\\label{{$label}}\n";
             $envClose="";}
-        else{$envOpen="\\title{{$name}}\n \\maketitle\n";
+        else{$envOpen="\\title{{$name}}\n \\maketitle\n \\thispagestyle{firstpage}";
             $envClose="";}
         
     }
@@ -106,6 +106,12 @@ function texReader($fileLocation) {
     
 echo"\\documentclass[11 pt]{article}\n";
 echo(texReader("./code/preambles/preamble.tex"));
+echo("\\fancypagestyle{firstpage}{%\n
+      \\fancyhf{}
+      \\renewcommand\headrulewidth{0pt}
+      \\fancyfoot[R]{Original text at \\texttt{ \\href{http://jeffhicks.net/snippets/index.php?tag=$tagName}{snippets/$texTagName}}}
+    }
+    "); 
 echo(texReader("./code/preambles/mathpreamble.tex"));
 echo("\\begin{filecontents}{references.bib}\n");
 echo(texReader("./code/preambles/references.bib"));
