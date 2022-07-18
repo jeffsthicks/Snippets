@@ -59,16 +59,16 @@ function texReader($fileLocation) {
             for ($i=0;$i<$sectionDepth-1;$i++){$subString=$subString."sub";}
             $envOpen="\\{$subString}section{{$name}}\n\\label{{$label}}\n";
             $envClose="";}
-        else{$envOpen="\\title{{$name}}";
+        else{$envOpen="\\title{{$name}}\n \\maketitle\n";
             $envClose="";}
         
     }
     else if (in_array($type,["theorem","definition","proposition","lemma","example","exercise","proof"])){
-        $envOpen="\\begin{{$type}}$source\n";
+        $envOpen="\\begin{{$type}}$source\n\\label{{$label}}\n";
         $envClose="\\end{{$type}}\n";
     }
     else if (in_array($type,["figure"])){
-        $envOpen="\\begin{figure}\n \label{{$label}}\n \centering\n ";
+        $envOpen="\\begin{figure}\n \\label{{$label}}\n \centering\n ";
         $envClose="\\caption{{$caption}}\n \\end{figure}";
     }
     else if (in_array($type,["diagram"])){
@@ -111,7 +111,7 @@ echo("\\begin{filecontents}{references.bib}\n");
 echo(texReader("./code/preambles/references.bib"));
 echo("\\end{filecontents}\n");
 echo("\addbibresource{references.bib}");
-echo"\\begin{document}\n";
+echo("\\begin{document}\n\n");
 echo(texReader($fileLocation));
 echo("\\printbibliography\n \\end{document}");
 

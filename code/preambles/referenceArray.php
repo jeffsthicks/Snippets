@@ -27,6 +27,11 @@
   2013.
 ",
 "#biran2013lagrangian"=>"BC13",
+"seidel2008fukaya"=>"Paul Seidel.
+ <em>Fukaya categories and Picard-Lefschetz theory</em>, volume&nbsp;10.
+ European Mathematical Society, 2008.
+",
+"#seidel2008fukaya"=>"Sei08",
 "seidel2003long"=>"Paul Seidel.
  A long exact sequence for symplectic Floer cohomology.
  <em>Topology</em>, 42:1003--1063, 2003.
