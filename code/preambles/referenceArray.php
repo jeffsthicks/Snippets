@@ -27,6 +27,11 @@
   2013.
 ",
 "#biran2013lagrangian"=>"BC13",
+"tanaka2016fukaya"=>"Hiro&nbsp;Lee Tanaka.
+ The fukaya category pairs with lagrangian cobordisms.
+ <em>arXiv preprint arXiv:1607.04976</em>, 2016.
+",
+"#tanaka2016fukaya"=>"Tan16",
 "seidel2008fukaya"=>"Paul Seidel.
  <em>Fukaya categories and Picard-Lefschetz theory</em>, volume&nbsp;10.
  European Mathematical Society, 2008.
