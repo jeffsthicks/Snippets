@@ -91,6 +91,7 @@ function texReader($fileLocation) {
         elseif ($line[0]=="%"){
             }
         else{
+            $line=preg_replace("/\\\\snip\{([^\}]*)\}\{([^\}]*)\}/","\underline{\href{https://jeffhicks.net/snippets/index.php?tag=$2}{ $1}}",$line);
             $bodyText=$bodyText.$line;
         }
     }

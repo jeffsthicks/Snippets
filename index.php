@@ -13,6 +13,7 @@
 <?php
     // Retrieve the URL variables (using PHP).
     $tagName = $_GET['tag'];
+    $tagName = str_replace(":","_",$tagName);
     if (isset($tagName)==False)
         {$tagName="main";}
     include("code/preambles/mathpreamble.php");
