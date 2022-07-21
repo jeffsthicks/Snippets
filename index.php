@@ -187,6 +187,13 @@ function texReader($tagName) {
         $thisIndex="$type $sectionCounter[1].$sectionCounter[2].$theoremCounter";
         $envOpen="<span class='anchor' id='$label'\>\n</span><mathEnvironment class=$type index='$thisIndex'>\n<h2 class=$type>$thisIndex $source</h2>  ";
         $envClose="</mathEnvironment>";
+        if( $type=="exercise" ){
+            $solName = "sol".substr($tagName,3);
+            $solFileName="./tags/$solName.tex";
+            if(file_exists($solFileName)){
+                $envClose="\n <p><a href='index.php?tag=$solName'>Click here</a> to view solution.\n</p> </mathEnvironnment>\n";
+            }
+        }
     }
     else if (in_array($type,["figure"])){
         $theoremCounter = $theoremCounter +1;
