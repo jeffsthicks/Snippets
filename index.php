@@ -22,6 +22,7 @@
 
 
     $sectionCounter=Array(0,0,0);
+    $footnoteCounter=0;
     $theoremCounter=0;
     $labelArray = array();
     $sectionDepth=-1;
@@ -32,7 +33,7 @@
 
 
 function texToHtml($line) {
-    global $referenceKeys, $bibArray;
+    global $referenceKeys, $bibArray, $footnoteCounter;
     if (preg_match("/\\\\input{(.*)\}/",$line,$matches)==1){
         if (file_exists("./tags/".$matches[1].".tex")){
         return texReader($matches[1]);}
@@ -40,6 +41,7 @@ function texToHtml($line) {
             return "<p><b> could not find file $matches[1] </b></p>";
         }
     }
+    
     if ($line == "/n"){return "</p><p>";}
     $line = preg_replace("/\\$([^\\$]*)\\$/","\($1\)",$line);
     $line = preg_replace("/\%.*/","",$line);
@@ -83,9 +85,11 @@ function texToHtml($line) {
     $line = preg_replace("/\\\\end\{application\}/","",$line);
     $line = preg_replace("/\\\\item/","<li>",$line);
     $line = preg_replace("/\\\\emph\{([^\}]*)\}/","<em>$1</em>",$line);
+    $line = preg_replace("/\\\\footnote\{([^\}]*)\}/",'<span title = "$1"><sup>'.$footnoteCounter.'</sup>   </span>',$line);
     $line = preg_replace("/\\\\intertext\{(.*)..$/","\\\\end{align*}$1\\\\begin{align*}",$line);
     $line = preg_replace("/\\\\caption.*/","",$line);
-    $line = preg_replace("/\\\\snip\{([^\}]*)\}\{(...).([^\}]*)\}/",'<a href="index.php?tag=$2_$3">$1</a>',$line);
+    $line = preg_replace("/\\\\snip\{([^\}]*)\}\{(...).([^\}]*)\}/",'<a href="$2_$3">$1</a>',$line);
+    
     if (preg_match_all("/.ite\{([^\}]*)\}/",$line,$matches)!=0){
         foreach ($matches[1] as $citationKey){
             if (in_array($citationKey,$referenceKeys)){

@@ -42,6 +42,11 @@
  <em>Topology</em>, 42:1003--1063, 2003.
 ",
 "#seidel2003long"=>"Sei03",
+"da2001lectures"=>"Ana&nbsp;Cannas da&nbsp;Silva.
+ Lectures on symplectic geometry.
+ <em>Lecture Notes in Mathematics</em>, 1764, 2001.
+",
+"#da2001lectures"=>"dS01",
 "polterovich1991surgery"=>"Leonid Polterovich.
  The surgery of Lagrange submanifolds.
  <em>Geometric &amp; Functional Analysis GAFA</em>, 1(2):198--210, 1991.

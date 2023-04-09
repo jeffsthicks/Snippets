@@ -88,7 +88,7 @@ header {
 
 
 article {
-  max-width:950px;
+  max-width:750px;
 	margin:90px auto 100px auto;
 	overflow:auto;
   padding: 20px;
@@ -116,6 +116,7 @@ article img {
 mathEnvironment {
     display: block;
     margin-top: 1em ;
+    padding:.5em;
 }
 
 mathEnvironment.definition {
@@ -170,7 +171,7 @@ figure  img {
 }
 
 figure figcaption {text-align: center;
-}
+} 
 
 
 
