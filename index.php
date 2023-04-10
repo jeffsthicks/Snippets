@@ -1,4 +1,22 @@
-
+<?php
+    // Retrieve the URL variables (using PHP).
+    $tagName = $_GET['tag'];
+    $tagName = str_replace(":","_",$tagName);
+    if (isset($tagName)==False)
+        {$tagName="main";}
+    
+    $tagLocation="./tags/".$tagName.".tex";
+    $f = fopen($tagLocation, "r");
+    while (($line = fgets($f))[0] == "%"){
+        if (preg_match('/parent:"(.*)"/',$line,$matches)==1){
+            $parent=$matches[1];
+            $uparent=str_replace(":","_",$parent);
+            $ctagName = str_replace("_",":",$tagName);
+            header("Location: $uparent#$ctagName");
+            die();
+        }
+    }
+?>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -9,15 +27,11 @@
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
   </head>
 <body>
-
 <?php
-    // Retrieve the URL variables (using PHP).
-    $tagName = $_GET['tag'];
-    $tagName = str_replace(":","_",$tagName);
-    if (isset($tagName)==False)
-        {$tagName="main";}
+
     include("code/preambles/mathpreamble.php");
     include("code/preambles/referenceArray.php");
+    include("code/preambles/tagArray.php");
     $tagName=strval($tagName);
 
 
@@ -35,10 +49,11 @@
 function texToHtml($line) {
     global $referenceKeys, $bibArray, $footnoteCounter;
     if (preg_match("/\\\\input{(.*)\}/",$line,$matches)==1){
-        if (file_exists("./tags/".$matches[1].".tex")){
-        return texReader($matches[1]);}
+        $tagName=str_replace(".tex","",$matches[1]);
+        if (file_exists("./tags/".$tagName.".tex")){
+        return texReader($tagName);}
         else{
-            return "<p><b> could not find file $matches[1] </b></p>";
+            return "<p><b> could not find file $tagName </b></p>";
         }
     }
     
@@ -187,7 +202,7 @@ function texReader($tagName) {
             $envClose="";}
         
     }
-    else if (in_array($type,["theorem","definition","proposition","lemma","example","exercise"])){
+    else if (in_array($type,["theorem","definition","proposition","lemma","example","exercise","application"])){
         $theoremCounter = $theoremCounter +1;
         $thisIndex="$type $sectionCounter[1].$sectionCounter[2].$theoremCounter";
         $envOpen="<span class='anchor' id='$label'\>\n</span><mathEnvironment class=$type index='$thisIndex'>\n<h2 class=$type>$thisIndex $source</h2>  ";
@@ -226,12 +241,19 @@ function texReader($tagName) {
     $bodyText= $envOpen.$bodyText.$envClose;
     $sectionDepth--;
     return $bodyText;}
-
     $bodyText= texReader($tagName);
         foreach($labelArray as $label=>$index){
         $regExp="/\\\\cref\{$label\}/";
         $bodyText=preg_replace($regExp,"<a href='#$label'>$index</a>",$bodyText);
+        $ulabel=str_replace(":","_",$label);
+        $bodyText = str_replace($ulabel,"#$label",$bodyText);
         }
+        
+        foreach($tagArray as $label=>$name){
+            $regExp="/\\\\cref\{$label\}/";
+            $ulabel=str_replace(":","_",$label);
+            $bodyText=preg_replace($regExp,"<a href='$ulabel'>($name)</a>",$bodyText);
+            }
         $regExp="/\\\\cref\{(.*)\}/";
         $bodyText=preg_replace($regExp,"<b>Missing Label ($1)!</b>",$bodyText);
 
@@ -266,12 +288,15 @@ function texReader($tagName) {
    echo($bodyText); 
 
     sort($referenceKeys);
-    echo("<h1> References </h1> \n <table>\n");
-    foreach($referenceKeys as $key){
-        $keyText=$bibArray['#'.$key];
-        echo("<tr id=\"$key\"> <td>[$keyText]</td><td>$bibArray[$key]</td></tr>\n");
-    }
-    echo("</table>");
+    if (count($referenceKeys) !== 0) {
+        echo("<h1> References </h1> \n <table>\n");
+        foreach($referenceKeys as $key){
+            $keyText=$bibArray['#'.$key];
+            echo("<tr id=\"$key\"> <td>[$keyText]</td><td>$bibArray[$key]</td></tr>\n");
+        }
+        echo("</table>");
+   }
+   
 ?>
 
 </article>

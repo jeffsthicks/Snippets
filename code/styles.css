@@ -146,6 +146,9 @@ mathEnvironment.example {
 mathEnvironment.remark {
   display: block;
 }
+mathEnvironment.application {
+  display: block;
+}
 
 mathEnvironment.proof {
   display: block;
@@ -193,6 +196,9 @@ h2.proposition, h2.lemma , h2.example, h2.definition, h2.theorem, h2.exercise{
       margin-left: 0;
       margin-right: 0;
       font-style: italic;
+    }
+  h2.application {
+    display: none;
     }
   h2.proof::after {
     content: ":"

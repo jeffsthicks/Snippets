@@ -6,4 +6,5 @@ RewriteCond %{REQUEST_URI} !download
 RewriteCond %{REQUEST_URI} !figures
 RewriteCond %{REQUEST_URI} !sitemap
 RewriteCond %{REQUEST_URI} !code
+RewriteCond %{REQUEST_URI} !diagrams
 RewriteRule ^(.*)$ index.php?tag=$1 
