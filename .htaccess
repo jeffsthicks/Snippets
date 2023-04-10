@@ -4,4 +4,5 @@ RewriteEngine on
 RewriteCond %{REQUEST_URI} !index
 RewriteCond %{REQUEST_URI} !download
 RewriteCond %{REQUEST_URI} !figures
+RewriteCond %{REQUEST_URI} !sitemap
 RewriteRule ^(.*)$ index.php?tag=$1 
