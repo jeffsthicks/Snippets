@@ -20,6 +20,7 @@
 \def\id{\operatorname{id}}
 \def\grad{\operatorname{grad}}
 \def\ind{\operatorname{ind}}
+\def\weight{\operatorname{wt}}
 \def\Sym{\operatorname{Sym}}
 \def\HeF{\widehat{CHF}^\bullet}
 \def\HHeF{\widehat{HHF}^\bullet}
