@@ -33,7 +33,7 @@
 \def\Log{{\operatorname{Log}}}
 \def\TropB{{\operatorname{TropB}}}
 \def\wt{{\operatorname{wt}}}
-\def\span{{\operatorname{span}}}
+\def\Span{{\operatorname{span}}}
 \def\Crit{\operatorname{Crit}}
 \def\into{\hookrightarrow}
 \def\tensor{\otimes}
