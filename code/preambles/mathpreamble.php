@@ -4,6 +4,8 @@
 \def\RR{{\mathbb R}}
 \def\NN{{\mathbb N}}
 \def\ZZ{{\mathbb Z}}
+\def\TT{{\mathbb T}}
+
 \def\CF{{\operatorname{CF}^\bullet}}
 \def\HF{{\operatorname{HF}^\bullet}}
 \def\SH{{\operatorname{SH}^\bullet}}
@@ -22,9 +24,15 @@
 \def\HeF{\widehat{CHF}^\bullet}
 \def\HHeF{\widehat{HHF}^\bullet}
 \def\Spinc{\operatorname{Spin}^c}
+\def\min{\operatorname{min}}
+\def\div{\operatorname{div}}
 \def\SH{{\operatorname{SH}^\bullet}}
 \def\CF{{\operatorname{CF}^\bullet}}
 \def\Tw{{\operatorname{Tw}}}
+\def\Log{{\operatorname{Log}}}
+\def\TropB{{\operatorname{TropB}}}
+\def\wt{{\operatorname{wt}}}
+\def\span{{\operatorname{span}}}
 \def\Crit{\operatorname{Crit}}
 \def\into{\hookrightarrow}
 \def\tensor{\otimes}
