@@ -1,10 +1,10 @@
 <?php
     // Retrieve the URL variables (using PHP).
-    $tagName = $_GET['tag'];
-    $tagName = str_replace(":","_",$tagName);
+    $tagName = $_GET['tag'];    
     if (isset($tagName)==False)
-        {$tagName="main";}
-    
+    {$tagName="main";}
+    $tagName = str_replace(":","_",$tagName);
+
     $tagLocation="./tags/".$tagName.".tex";
     $f = fopen($tagLocation, "r");
     while (($line = fgets($f))[0] == "%"){
