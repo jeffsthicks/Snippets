@@ -104,6 +104,7 @@ function texToHtml($line) {
     $line = preg_replace("/\\\\intertext\{(.*)..$/","\\\\end{align*}$1\\\\begin{align*}",$line);
     $line = preg_replace("/\\\\caption.*/","",$line);
     $line = preg_replace("/\\\\snip\{([^\}]*)\}\{(...).([^\}]*)\}/",'<a href="$2_$3">$1</a>',$line);
+    $line = preg_replace("/\\\\href\{([^\}]*)\}\{([^\}]*)\}/",'<a href="$1">$2</a>',$line);
     
     if (preg_match_all("/.ite\{([^\}]*)\}/",$line,$matches)!=0){
         foreach ($matches[1] as $citationKey){
