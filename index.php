@@ -6,6 +6,7 @@
     $tagName = str_replace(":","_",$tagName);
 
     $tagLocation="./tags/".$tagName.".tex";
+    if (file_exists($tagLocation)!=True){$tagLocation = "./tags/error.tex";$tagName="error";}
     $f = fopen($tagLocation, "r");
     while (($line = fgets($f))[0] == "%"){
         if (preg_match('/parent:"(.*)"/',$line,$matches)==1){
