@@ -258,7 +258,16 @@ function texReader($tagName) {
         $regExp="/\\\\cref\{(.*)\}/";
         $bodyText=preg_replace($regExp,"<b>Missing Label ($1)!</b>",$bodyText);
 
-
+    if($tagName=="main"){
+        $bodyText=$bodyText."<h2> Index of snippets </h2><ul>";
+        $fileList = scandir("./tags/");
+        foreach($fileList as $fileName){
+            if(str_contains($fileName,"_")){
+            $thisTag=str_replace(".tex","",$fileName);
+            $bodyText=$bodyText."<li><a href='$thisTag'>$thisTag</a></li>";}
+        }
+        $bodyText=$bodyText."</ul>";
+    }
 ?>
 
 <?php
