@@ -103,6 +103,7 @@ function texToHtml($line) {
     $line = preg_replace("/\\\\emph\{([^\}]*)\}/","<em>$1</em>",$line);
     $line = preg_replace("/\\\\footnote\{([^\}]*)\}/",'<span title = "$1"><sup>'.$footnoteCounter.'</sup>   </span>',$line);
     $line = preg_replace("/\\\\intertext\{(.*)..$/","\\\\end{align*}$1\\\\begin{align*}",$line);
+    $line = preg_replace(pattern: "/\\\\\"(.)/",replacement:"&$1uml",subject: $line);
     $line = preg_replace("/\\\\caption.*/","",$line);
     $line = preg_replace("/\\\\snip\{([^\}]*)\}\{(...).([^\}]*)\}/",'<a href="$2_$3">$1</a>',$line);
     $line = preg_replace("/\\\\href\{([^\}]*)\}\{([^\}]*)\}/",'<a href="$1">$2</a>',$line);

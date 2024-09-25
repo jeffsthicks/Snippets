@@ -35,6 +35,11 @@
 \def\wt{{\operatorname{wt}}}
 \def\Span{{\operatorname{span}}}
 \def\Crit{\operatorname{Crit}}
+\def\CritVal{\operatorname{CritVal}}
+\def\FS{\operatorname{FS}}
+\def\Sing{\operatorname{Sing}}
+\def\Coh{\operatorname{Coh}}
+\def\Vect{\operatorname{Vect}}
 \def\into{\hookrightarrow}
 \def\tensor{\otimes}
 \def\CP{\mathbb{CP}}
