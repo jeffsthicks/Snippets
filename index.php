@@ -10,11 +10,14 @@
     $f = fopen($tagLocation, "r");
     while (($line = fgets($f))[0] == "%"){
         if (preg_match('/parent:"(.*)"/',$line,$matches)==1){
-            $parent=$matches[1];
-            $uparent=str_replace(":","_",$parent);
-            $ctagName = str_replace("_",":",$tagName);
-            header("Location: $uparent#$ctagName");
-            die();
+            if($matches[1]!="")
+            {
+                $parent=$matches[1];
+                $uparent=str_replace(":","_",$parent);
+                $ctagName = str_replace("_",":",$tagName);
+                header("Location: $uparent#$ctagName");
+                die();
+            }
         }
     }
 ?>
