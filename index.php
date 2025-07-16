@@ -12,11 +12,11 @@
         if (preg_match('/parent:"(.*)"/',$line,$matches)==1){
             if($matches[1]!="")
             {
-                $parent=$matches[1];
-                $uparent=str_replace(":","_",$parent);
-                $ctagName = str_replace("_",":",$tagName);
-                header("Location: $uparent#$ctagName");
-                die();
+                #$parent=$matches[1];
+                #$uparent=str_replace(":","_",$parent);
+                #$ctagName = str_replace("_",":",$tagName);
+                #header("Location: $uparent#$ctagName");
+                #die();
             }
         }
     }
