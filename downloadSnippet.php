@@ -1,11 +1,22 @@
 <?php
-$tagName = $_GET['tag'];
+require_once __DIR__ . "/code/snippetHelpers.php";
+
+$requestedTagName = $_GET['tag'] ?? 'main';
+$tagName = normalizeSnippetTag($requestedTagName);
+$fileLocation = $tagName === null ? null : snippetFilePath($tagName);
+
+if ($fileLocation === null) {
+    http_response_code(404);
+    header("Content-Type: text/plain; charset=utf-8");
+    echo "Snippet not found.";
+    return;
+}
+
 header("Content-Disposition: attachment; filename=\"$tagName.tex\"");
 
 // Retrieve the URL variables (using PHP).
 
-$fileLocation= "./tags/$tagName.tex";
-$texTagName=preg_replace("/\_/","\_",$tagName);
+$texTagName=str_replace("_","\\_",$tagName);
 $sectionDepth=-1;
 function texReader($fileLocation) {
     global $sectionDepth;
@@ -13,7 +24,7 @@ function texReader($fileLocation) {
 
     $f = fopen($fileLocation, "r");
        {# Build up the metadata for this entry
-        while (($line = fgets($f))[0] == "%"){
+        while (($line = fgets($f)) !== false && str_starts_with($line, "%")){
             if (preg_match('/name:"(.*)"/',$line,$matches)==1){
                 $name=$matches[1];
                 $name = preg_replace("/\\$([^\\$]*)\\$/","\($1\)",$name);}
@@ -85,8 +96,11 @@ function texReader($fileLocation) {
             #$inputLocation="./tags/figures/$matches[1]";
             #$bodyText=$bodyText.texReader($inputLocation);
         }   elseif (preg_match("/\\\\input{([^\}]*)\}/",$line,$matches)==1){
-            $inputLocation="./tags/$matches[1].tex";
-            $bodyText=$bodyText.texReader($inputLocation);
+            $inputTag=normalizeSnippetTag($matches[1]);
+            $inputLocation=$inputTag === null ? null : snippetFilePath($inputTag);
+            if ($inputLocation !== null) {
+                $bodyText=$bodyText.texReader($inputLocation);
+            }
         }
         elseif ($line[0]=="%"){
             }
