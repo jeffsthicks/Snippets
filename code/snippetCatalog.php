@@ -178,6 +178,152 @@ function renderSnippetTypeOptions($types) {
     return $html;
 }
 
+function snippetAtlasTopics($catalog) {
+    $topicDefinitions = array(
+        "Symplectic Geometry" => array("symplectic", "hamiltonian", "moser", "darboux", "weinstein"),
+        "Lagrangians" => array("lagrangian", "surgery", "cobordism", "thimble"),
+        "Floer Theory" => array("floer", "heegaard", "holomorphic", "strip"),
+        "Symplectic Cohomology" => array("symplectic cohomology", "viterbo", "reeb", "liouville"),
+        "Tropical Geometry" => array("tropical", "polyhedral", "chow", "rational equivalence"),
+        "Categories" => array("category", "module", "twisted", "infinity", "triangulated"),
+        "Mirror Symmetry" => array("mirror", "fukaya", "seidel", "landau", "fano"),
+    );
+
+    $topics = array();
+    foreach ($topicDefinitions as $topic => $keywords) {
+        $matches = array();
+        foreach ($catalog["items"] as $item) {
+            foreach ($keywords as $keyword) {
+                if (str_contains($item["searchText"], strtolower($keyword))) {
+                    $matches[] = $item;
+                    break;
+                }
+            }
+        }
+
+        usort($matches, function ($left, $right) {
+            $score = function ($item) {
+                if ($item["type"] === "article") {
+                    return 0;
+                }
+                if (in_array($item["type"], array("definition", "theorem"))) {
+                    return 1;
+                }
+                return 2;
+            };
+
+            $scoreCompare = $score($left) <=> $score($right);
+            if ($scoreCompare !== 0) {
+                return $scoreCompare;
+            }
+            return strcmp(strtolower($left["name"]), strtolower($right["name"]));
+        });
+
+        $topics[$topic] = $matches;
+    }
+
+    return $topics;
+}
+
+function snippetLearningTrails() {
+    return array(
+        array(
+            "name" => "First Contact",
+            "description" => "Start with the local models and core vocabulary.",
+            "tags" => array("art_basicSymplectic", "def_symplecticManifold", "def_lagrangianSubmanifold", "thm_weinsteinNeighborhood"),
+        ),
+        array(
+            "name" => "Lagrangian Toolkit",
+            "description" => "Move from examples to surgery and cobordisms.",
+            "tags" => array("art_lagrangianSubmanifolds", "exm_lagrangiansFromConormals", "con_polterovichSurgery", "art_lagrangianCobordisms"),
+        ),
+        array(
+            "name" => "Floer Corridor",
+            "description" => "Follow the bridge from symmetric products to Heegaard Floer theory.",
+            "tags" => array("art_heegaardFloer", "art_heegaardFloerConstruction", "def_heegaardDiagram", "thm_invarianceOfHeegaardFloer"),
+        ),
+        array(
+            "name" => "Cohomology Engine",
+            "description" => "Trace Liouville domains, Reeb flow, and Viterbo restriction.",
+            "tags" => array("art_symplecticCohomologyExposition", "def_liouvilleDomain", "def_reebVectorField", "thm_viterboRestriction"),
+        ),
+        array(
+            "name" => "Tropical Wing",
+            "description" => "Read the tropical material through cycles and rational equivalence.",
+            "tags" => array("art_tropicalGeometryIntroduction", "def_TropicalChowGroup", "prp_TropicalPushforward", "art_RationalEquivalenceInTropicalGeometry"),
+        ),
+    );
+}
+
+function renderSnippetAtlas($catalog) {
+    $types = snippetCatalogTypes($catalog);
+    $topics = snippetAtlasTopics($catalog);
+    $total = count($catalog["items"]);
+    $articleCount = $types["article"] ?? 0;
+    $definitionCount = $types["definition"] ?? 0;
+    $theoremCount = $types["theorem"] ?? 0;
+
+    $html = "<section class='atlas-panel' id='atlas'>\n";
+    $html .= "<div class='atlas-header'>\n";
+    $html .= "<p class='kicker'>Symplectic Snippets Atlas</p>\n";
+    $html .= "<h2>Paths, shelves, and cross-links through the notes</h2>\n";
+    $html .= "</div>\n";
+
+    $html .= "<div class='atlas-stats'>\n";
+    $html .= renderAtlasStat($total, "snippets", "whole corpus");
+    $html .= renderAtlasStat($articleCount, "articles", "guided routes");
+    $html .= renderAtlasStat($definitionCount, "definitions", "vocabulary");
+    $html .= renderAtlasStat($theoremCount, "theorems", "anchors");
+    $html .= "</div>\n";
+
+    $html .= "<div class='type-ribbon' aria-label='Snippet type counts'>\n";
+    foreach ($types as $type => $count) {
+        $width = max(4, round(($count / max(1, $total)) * 100));
+        $html .= "<a href='#browse' class='type-chip' data-type-jump='" . escapeHtml($type) . "' style='--w:" . escapeHtml($width) . "%'>";
+        $html .= "<span>" . escapeHtml($type) . "</span><b>" . escapeHtml($count) . "</b></a>\n";
+    }
+    $html .= "</div>\n";
+
+    $html .= "<div class='trail-grid'>\n";
+    foreach (snippetLearningTrails() as $trail) {
+        $html .= "<section class='trail-card'>\n";
+        $html .= "<h3>" . escapeHtml($trail["name"]) . "</h3>\n";
+        $html .= "<p>" . escapeHtml($trail["description"]) . "</p>\n<ol>\n";
+        foreach ($trail["tags"] as $tag) {
+            if (!isset($catalog["byTag"][$tag])) {
+                continue;
+            }
+            $item = $catalog["byTag"][$tag];
+            $html .= "<li><a href='" . escapeHtml($item["url"]) . "'>" . escapeHtml($item["name"]) . "</a>";
+            $html .= "<span>" . escapeHtml($item["type"]) . "</span></li>\n";
+        }
+        $html .= "</ol>\n</section>\n";
+    }
+    $html .= "</div>\n";
+
+    $html .= "<div class='topic-board'>\n";
+    foreach ($topics as $topic => $items) {
+        if ($items === array()) {
+            continue;
+        }
+        $html .= "<section class='topic-lane'>\n";
+        $html .= "<h3>" . escapeHtml($topic) . " <span>" . escapeHtml(count($items)) . "</span></h3>\n<ul>\n";
+        foreach (array_slice($items, 0, 5) as $item) {
+            $html .= "<li><a href='" . escapeHtml($item["url"]) . "'>" . escapeHtml($item["name"]) . "</a>";
+            $html .= "<span>" . escapeHtml($item["type"]) . "</span></li>\n";
+        }
+        $html .= "</ul>\n</section>\n";
+    }
+    $html .= "</div>\n";
+    $html .= "</section>\n";
+
+    return $html;
+}
+
+function renderAtlasStat($number, $label, $description) {
+    return "<div class='atlas-stat'><strong>" . escapeHtml($number) . "</strong><span>" . escapeHtml($label) . "</span><small>" . escapeHtml($description) . "</small></div>\n";
+}
+
 function renderSnippetBrowse($catalog) {
     $types = snippetCatalogTypes($catalog);
     $html = "<section class='browse-panel' id='browse'>\n";
@@ -185,6 +331,15 @@ function renderSnippetBrowse($catalog) {
     $html .= "<div class='browse-controls'>\n";
     $html .= "<input id='browse-query' type='search' placeholder='Filter snippets' aria-label='Filter snippets'>\n";
     $html .= "<select id='browse-type' aria-label='Filter by type'>" . renderSnippetTypeOptions($types) . "</select>\n";
+    $html .= "</div>\n";
+    $html .= "<div class='quick-filters' aria-label='Quick type filters'>\n";
+    foreach (array("article", "definition", "theorem", "example", "exercise", "figure") as $type) {
+        if (!isset($types[$type])) {
+            continue;
+        }
+        $html .= "<button type='button' data-type-filter='" . escapeHtml($type) . "'>" . escapeHtml($type) . "</button>\n";
+    }
+    $html .= "<button type='button' data-type-filter=''>all</button>\n";
     $html .= "</div>\n";
 
     foreach ($types as $type => $count) {
@@ -223,5 +378,53 @@ function renderSnippetBacklinks($tag, $catalog) {
         $html .= " <span class='snippet-label'>" . escapeHtml($item["type"]) . " / " . escapeHtml($item["label"]) . "</span></li>\n";
     }
     $html .= "</ul>\n</section>\n";
+    return $html;
+}
+
+function renderSnippetConnections($tag, $catalog) {
+    if (!isset($catalog["byTag"][$tag])) {
+        return "";
+    }
+
+    $current = $catalog["byTag"][$tag];
+    $uses = array();
+    foreach ($current["targets"] as $target) {
+        $targetTag = $target;
+        if (!isset($catalog["byTag"][$targetTag]) && isset($catalog["byLabel"][$target])) {
+            $targetTag = $catalog["byLabel"][$target];
+        }
+        if (isset($catalog["byTag"][$targetTag]) && $targetTag !== $tag) {
+            $uses[$targetTag] = $catalog["byTag"][$targetTag];
+        }
+    }
+
+    $backlinks = snippetBacklinks($tag, $catalog);
+    if ($uses === array() && $backlinks === array()) {
+        return "";
+    }
+
+    $html = "<section class='connection-panel' id='connections'>\n";
+    $html .= "<h2>Connections</h2>\n";
+    $html .= "<div class='connection-grid'>\n";
+    $html .= renderConnectionColumn("Uses", array_values($uses));
+    $html .= renderConnectionColumn("Used in", $backlinks);
+    $html .= "</div>\n</section>\n";
+
+    return $html;
+}
+
+function renderConnectionColumn($title, $items) {
+    $html = "<div class='connection-column'><h3>" . escapeHtml($title) . "</h3>\n";
+    if ($items === array()) {
+        $html .= "<p>No direct links found.</p></div>\n";
+        return $html;
+    }
+
+    $html .= "<ul>\n";
+    foreach (array_slice($items, 0, 10) as $item) {
+        $html .= "<li><a href='" . escapeHtml($item["url"]) . "'>" . escapeHtml($item["name"]) . "</a>";
+        $html .= "<span>" . escapeHtml($item["type"]) . " / " . escapeHtml($item["label"]) . "</span></li>\n";
+    }
+    $html .= "</ul></div>\n";
     return $html;
 }

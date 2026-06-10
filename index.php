@@ -31,10 +31,11 @@
 
     if (!$snippetNotFound) {
         if ($tagName === "main") {
+            $bodyText .= renderSnippetAtlas($snippetCatalog);
             $bodyText .= renderSnippetBrowse($snippetCatalog);
         }
         else {
-            $bodyText .= renderSnippetBacklinks($tagName, $snippetCatalog);
+            $bodyText .= renderSnippetConnections($tagName, $snippetCatalog);
         }
     }
 ?>
@@ -50,14 +51,19 @@
   </head>
 <body>
 <?php include("code/preambles/mathpreamble.php"); ?>
-<?php
-    echo("<header>\n<h1> " . escapeHtml($pageTitle) . " </h1>\n</header>\n");
-?>
+<main id="snippet-resource" class="snippet-resource">
+    <header class="snippet-mast">
+        <p class="eyebrow">Symplectic snippets</p>
+        <h1><?php echo(escapeHtml($pageTitle)); ?></h1>
+    </header>
 
-    <div class="menu">
-    <div class="title">SECTIONS</div>
+    <section class="snippet-workbench" aria-label="Snippet reader">
+    <aside class="menu" aria-label="Snippet navigation">
+    <div class="title">Sections</div>
     <div class="menu-tools">
+        <a href="../">Jeff Hicks</a>
         <a href="main">Home</a>
+        <a href="main#atlas">Atlas</a>
         <a href="main#browse">Browse</a>
         <a href="searchIndex.php">Search data</a>
         <input id="snippet-search" type="search" placeholder="Search snippets" aria-label="Search snippets">
@@ -82,12 +88,16 @@
         echo("<ul class='menu-links'><li><a href='./downloadSnippet.php?tag=" . escapeHtml($tagName) . "'>Download .tex</a></li></ul>");
     }
 ?>
-  </div>
+    </aside>
 
-<article>
+<article class="snippet-article">
    <?php
    echo($bodyText);
    echo($referencesHtml);
 ?>
 
 </article>
+    </section>
+</main>
+</body>
+</html>
