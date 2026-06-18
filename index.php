@@ -63,9 +63,8 @@
     <div class="menu-tools">
         <a href="../">Jeff Hicks</a>
         <a href="main">Home</a>
-        <a href="main#atlas">Atlas</a>
+        <a href="main#atlas">Index</a>
         <a href="main#browse">Browse</a>
-        <a href="searchIndex.php">Search data</a>
         <input id="snippet-search" type="search" placeholder="Search snippets" aria-label="Search snippets">
         <select id="snippet-search-type" aria-label="Filter search by type">
             <?php echo(renderSnippetTypeOptions($snippetTypes)); ?>

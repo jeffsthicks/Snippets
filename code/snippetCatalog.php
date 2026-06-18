@@ -228,28 +228,28 @@ function snippetAtlasTopics($catalog) {
 function snippetLearningTrails() {
     return array(
         array(
-            "name" => "First Contact",
-            "description" => "Start with the local models and core vocabulary.",
+            "name" => "Getting started",
+            "description" => "Start with local models and core vocabulary.",
             "tags" => array("art_basicSymplectic", "def_symplecticManifold", "def_lagrangianSubmanifold", "thm_weinsteinNeighborhood"),
         ),
         array(
-            "name" => "Lagrangian Toolkit",
-            "description" => "Move from examples to surgery and cobordisms.",
+            "name" => "Lagrangians",
+            "description" => "Review examples, surgery, and cobordisms.",
             "tags" => array("art_lagrangianSubmanifolds", "exm_lagrangiansFromConormals", "con_polterovichSurgery", "art_lagrangianCobordisms"),
         ),
         array(
-            "name" => "Floer Corridor",
-            "description" => "Follow the bridge from symmetric products to Heegaard Floer theory.",
+            "name" => "Floer theory",
+            "description" => "Read from symmetric products to Heegaard Floer theory.",
             "tags" => array("art_heegaardFloer", "art_heegaardFloerConstruction", "def_heegaardDiagram", "thm_invarianceOfHeegaardFloer"),
         ),
         array(
-            "name" => "Cohomology Engine",
-            "description" => "Trace Liouville domains, Reeb flow, and Viterbo restriction.",
+            "name" => "Symplectic cohomology",
+            "description" => "Review Liouville domains, Reeb flow, and Viterbo restriction.",
             "tags" => array("art_symplecticCohomologyExposition", "def_liouvilleDomain", "def_reebVectorField", "thm_viterboRestriction"),
         ),
         array(
-            "name" => "Tropical Wing",
-            "description" => "Read the tropical material through cycles and rational equivalence.",
+            "name" => "Tropical geometry",
+            "description" => "Read the tropical material on cycles and rational equivalence.",
             "tags" => array("art_tropicalGeometryIntroduction", "def_TropicalChowGroup", "prp_TropicalPushforward", "art_RationalEquivalenceInTropicalGeometry"),
         ),
     );
@@ -265,15 +265,15 @@ function renderSnippetAtlas($catalog) {
 
     $html = "<section class='atlas-panel' id='atlas'>\n";
     $html .= "<div class='atlas-header'>\n";
-    $html .= "<p class='kicker'>Symplectic Snippets Atlas</p>\n";
-    $html .= "<h2>Paths, shelves, and cross-links through the notes</h2>\n";
+    $html .= "<p class='kicker'>Snippet index</p>\n";
+    $html .= "<h2>Browse the notes by topic and type</h2>\n";
     $html .= "</div>\n";
 
     $html .= "<div class='atlas-stats'>\n";
-    $html .= renderAtlasStat($total, "snippets", "whole corpus");
-    $html .= renderAtlasStat($articleCount, "articles", "guided routes");
+    $html .= renderAtlasStat($total, "snippets", "total");
+    $html .= renderAtlasStat($articleCount, "articles", "overview notes");
     $html .= renderAtlasStat($definitionCount, "definitions", "vocabulary");
-    $html .= renderAtlasStat($theoremCount, "theorems", "anchors");
+    $html .= renderAtlasStat($theoremCount, "theorems", "results");
     $html .= "</div>\n";
 
     $html .= "<div class='type-ribbon' aria-label='Snippet type counts'>\n";
@@ -301,20 +301,24 @@ function renderSnippetAtlas($catalog) {
     }
     $html .= "</div>\n";
 
-    $html .= "<div class='topic-board'>\n";
+    $html .= "<section class='topic-board' aria-label='Topics'>\n";
+    $html .= "<h3>Topics</h3>\n";
     foreach ($topics as $topic => $items) {
         if ($items === array()) {
             continue;
         }
-        $html .= "<section class='topic-lane'>\n";
-        $html .= "<h3>" . escapeHtml($topic) . " <span>" . escapeHtml(count($items)) . "</span></h3>\n<ul>\n";
-        foreach (array_slice($items, 0, 5) as $item) {
+        $html .= "<details class='topic-lane'>\n";
+        $html .= "<summary><span>" . escapeHtml($topic) . "</span><b>" . escapeHtml(count($items)) . "</b></summary>\n<ul>\n";
+        foreach (array_slice($items, 0, 4) as $item) {
             $html .= "<li><a href='" . escapeHtml($item["url"]) . "'>" . escapeHtml($item["name"]) . "</a>";
             $html .= "<span>" . escapeHtml($item["type"]) . "</span></li>\n";
         }
-        $html .= "</ul>\n</section>\n";
+        if (count($items) > 4) {
+            $html .= "<li class='topic-more'>+" . escapeHtml(count($items) - 4) . " more</li>\n";
+        }
+        $html .= "</ul>\n</details>\n";
     }
-    $html .= "</div>\n";
+    $html .= "</section>\n";
     $html .= "</section>\n";
 
     return $html;

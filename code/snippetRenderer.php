@@ -13,6 +13,8 @@ class SnippetRenderer {
     private $referenceKeys = array();
     private $tableOfContents = array();
     private $pageTitle = "";
+    private $pageSource = "";
+    private $pageType = "";
 
     public function __construct($bibArray, $tagArray) {
         $this->bibArray = $bibArray;
@@ -61,6 +63,10 @@ class SnippetRenderer {
 
         list($metadata, $body) = readSnippetMetadataAndBody($tagLocation);
         $metadata = $this->withMetadataDefaults($metadata);
+        if ($this->sectionDepth === 0) {
+            $this->pageSource = $metadata["source"];
+            $this->pageType = $metadata["type"];
+        }
         $bodyText = "";
 
         if (!in_array($metadata["type"], array("figure", "diagram"))) {
@@ -106,6 +112,9 @@ class SnippetRenderer {
         $envClose = "";
 
         if (in_array($type, array("article", "exposition", "construction"))) {
+            if (!isset($this->sectionCounter[$this->sectionDepth])) {
+                $this->sectionCounter[$this->sectionDepth] = 0;
+            }
             $this->sectionCounter[$this->sectionDepth] = $this->sectionCounter[$this->sectionDepth] + 1;
             $this->sectionCounter[$this->sectionDepth + 1] = 0;
             $this->sectionCounter[$this->sectionDepth + 2] = 0;
@@ -165,10 +174,19 @@ class SnippetRenderer {
             return "";
         }
 
-        $this->addReferenceKey($sourceTag);
-        $keyText = $this->bibArray["#" . $sourceTag] ?? escapeHtml($sourceTag);
-        $label = $metadata["sourceDetail"] === "" ? $keyText : escapeHtml($metadata["sourceDetail"] . " of " . $keyText);
+        if ($this->sectionDepth > 0 && in_array($this->pageType, array("article", "exposition", "construction")) && $sourceTag === $this->pageSource) {
+            return "";
+        }
 
+        $sourceIsBibliographyKey = isset($this->bibArray[$sourceTag]);
+        $keyText = $this->bibArray["#" . $sourceTag] ?? $sourceTag;
+        $label = $metadata["sourceDetail"] === "" ? $keyText : $metadata["sourceDetail"] . " of " . $keyText;
+
+        if (!$sourceIsBibliographyKey) {
+            return "<span class='source-note'>[" . escapeHtml($label) . "]</span>";
+        }
+
+        $this->addReferenceKey($sourceTag);
         return "<a href='#" . escapeHtml($sourceTag) . "'>[$label]</a>";
     }
 

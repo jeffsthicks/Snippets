@@ -4,6 +4,7 @@
 \def\RR{{\mathbb R}}
 \def\NN{{\mathbb N}}
 \def\ZZ{{\mathbb Z}}
+\def\QQ{{\mathbb Q}}
 \def\TT{{\mathbb T}}
 
 \def\CF{{\operatorname{CF}^\bullet}}

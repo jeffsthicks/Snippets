@@ -47,6 +47,18 @@
  <em>Lecture Notes in Mathematics</em>, 1764, 2001.
 ",
 "#da2001lectures"=>"dS01",
+"seidel2001vanishing"=>"Paul Seidel.
+ Vanishing cycles and mutation.
+ In <em>European Congress of Mathematics: Barcelona, July 10--14,
+  2000 Volume II</em>, pages 65--85. Springer, 2001.
+",
+"#seidel2001vanishing"=>"Sei01b",
+"seidel2001more"=>"Paul Seidel.
+ More about vanishing cycles and mutation.
+ <em>Symplectic Geometry and Mirror Symmetry (Seoul, 2000)</em>, pages
+  429--465, 2001.
+",
+"#seidel2001more"=>"Sei01a",
 "polterovich1991surgery"=>"Leonid Polterovich.
  The surgery of Lagrange submanifolds.
  <em>Geometric &amp; Functional Analysis GAFA</em>, 1(2):198--210, 1991.
@@ -146,6 +158,45 @@
  <em>Matematicheskii Sbornik</em>, 72(2):271--316, 1952.
 ",
 "#fet1952variational"=>"Fet52",
+"candelas1991pair"=>"Philip Candelas, Xenia&nbsp;C. de&nbsp;la Ossa, Paul&nbsp;S. Green, and Linda Parkes.
+ A pair of Calabi--Yau manifolds as an exactly soluble
+  superconformal theory.
+ <em>Nuclear Physics B</em>, 359(1):21--74, 1991.
+",
+"#candelas1991pair"=>"CdlOGP91",
+"kontsevich1994homological"=>"Maxim Kontsevich.
+ Homological algebra of mirror symmetry.
+ In <em>Proceedings of the International Congress of Mathematicians</em>,
+  1994.
+",
+"#kontsevich1994homological"=>"Kon94",
+"strominger1996mirror"=>"Andrew Strominger, Shing-Tung Yau, and Eric Zaslow.
+ Mirror symmetry is T-duality.
+ <em>Nuclear Physics B</em>, 479(1--2):243--259, 1996.
+",
+"#strominger1996mirror"=>"SYZ96",
+"gross2003affine"=>"Mark Gross and Bernd Siebert.
+ Affine manifolds, log structures, and mirror symmetry.
+ <em>Turkish Journal of Mathematics</em>, 27(1):33--60, 2003.
+",
+"#gross2003affine"=>"GS03",
+"hubsch1992calabi"=>"Tristan H&uuml;bsch.
+ <em>Calabi--Yau manifolds: A bestiary for physicists</em>.
+ World Scientific, 1992.
+",
+"#hubsch1992calabi"=>"H&uuml;b92",
+"yau1978ricci"=>"Shing-Tung Yau.
+ On the ricci curvature of a compact K&auml;hler manifold and the
+  complex Monge--Ampere equation, i.
+ <em>Communications on Pure and Applied Mathematics</em>, 31(3):339--411,
+  1978.
+",
+"#yau1978ricci"=>"Yau78",
+"gross2001special"=>"Mark Gross.
+ Special Lagrangian fibrations i: Topology.
+ <em>AMS/IP Studies in Advanced Mathematics</em>, 23:65--94, 2001.
+",
+"#gross2001special"=>"Gro01",
 )
 ;
  ?>

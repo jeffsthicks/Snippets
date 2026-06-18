@@ -317,7 +317,6 @@ p + p {
 
 .atlas-stat,
 .trail-card,
-.topic-lane,
 .connection-column {
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -396,7 +395,6 @@ p + p {
 }
 
 .trail-grid,
-.topic-board,
 .connection-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -404,13 +402,11 @@ p + p {
 }
 
 .trail-card,
-.topic-lane,
 .connection-column {
   padding: 16px;
 }
 
 .trail-card h3,
-.topic-lane h3,
 .connection-column h3 {
   margin-bottom: 8px;
 }
@@ -421,7 +417,6 @@ p + p {
 }
 
 .trail-card ol,
-.topic-lane ul,
 .connection-column ul,
 .snippet-list,
 .related-snippets ul {
@@ -431,7 +426,6 @@ p + p {
 }
 
 .trail-card li,
-.topic-lane li,
 .connection-column li,
 .snippet-entry,
 .related-snippets li {
@@ -440,24 +434,93 @@ p + p {
 }
 
 .trail-card li:first-child,
-.topic-lane li:first-child,
 .connection-column li:first-child,
 .snippet-entry:first-child {
   border-top: 0;
 }
 
 .trail-card li span,
-.topic-lane li span,
 .connection-column li span {
   display: block;
   color: var(--muted);
   font-size: 0.8rem;
 }
 
-.topic-lane h3 span {
+.topic-board {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 254, 251, 0.72);
+}
+
+.topic-board > h3 {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(23, 23, 23, 0.09);
+}
+
+.topic-lane {
+  border-top: 1px solid rgba(23, 23, 23, 0.09);
+}
+
+.topic-board > h3 + .topic-lane {
+  border-top: 0;
+}
+
+.topic-lane summary {
+  min-height: 42px;
+  padding: 10px 16px;
+  cursor: pointer;
+  color: var(--ink);
+  font-weight: 720;
+}
+
+.topic-lane summary:hover {
+  color: var(--rust);
+}
+
+.topic-lane summary b {
+  float: right;
   color: var(--muted);
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.9rem;
   font-weight: 400;
+}
+
+.topic-lane ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 18px;
+  margin: 0;
+  padding: 0 16px 12px;
+  list-style: none;
+}
+
+.topic-lane li {
+  padding: 7px 0;
+  border-top: 1px solid rgba(23, 23, 23, 0.09);
+}
+
+.topic-lane li:nth-child(-n + 2) {
+  border-top: 0;
+}
+
+.topic-lane li a {
+  color: var(--ink);
+  font-weight: 720;
+  text-decoration-color: rgba(23, 23, 23, 0.18);
+}
+
+.topic-lane li a:hover {
+  color: var(--rust);
+}
+
+.topic-lane li span,
+.topic-more {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.topic-lane li span {
+  margin-left: 6px;
 }
 
 .browse-controls {
@@ -522,10 +585,12 @@ p + p {
 
 mathEnvironment {
   display: block;
+  max-width: 100%;
   margin: 1.15em 0;
   padding: 0.9em 1em;
   border-left: 4px solid var(--soft-line);
   background: rgba(255, 254, 251, 0.52);
+  overflow-wrap: anywhere;
 }
 
 mathEnvironment.definition,
@@ -586,6 +651,10 @@ h2.proof {
 
 h2.application {
   display: none;
+}
+
+.source-note {
+  color: var(--muted);
 }
 
 h2.proof::after {
@@ -694,10 +763,21 @@ footer {
   }
 
   .trail-grid,
-  .topic-board,
   .connection-grid,
   .atlas-stats {
     grid-template-columns: 1fr;
+  }
+
+  .topic-lane ul {
+    grid-template-columns: 1fr;
+  }
+
+  .topic-lane li:nth-child(-n + 2) {
+    border-top: 1px solid rgba(23, 23, 23, 0.09);
+  }
+
+  .topic-lane li:first-child {
+    border-top: 0;
   }
 }
 
