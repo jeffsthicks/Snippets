@@ -29,6 +29,17 @@
     $snippetCatalog = loadSnippetCatalog();
     $snippetTypes = snippetCatalogTypes($snippetCatalog);
 
+    function versionedAsset($relativePath) {
+        $absolutePath = __DIR__ . "/" . $relativePath;
+        if (is_file($absolutePath)) {
+            return $relativePath . "?v=" . filemtime($absolutePath);
+        }
+        return $relativePath;
+    }
+
+    $stylesHref = versionedAsset("code/styles.css");
+    $searchScriptSrc = versionedAsset("code/search.js");
+
     if (!$snippetNotFound) {
         if ($tagName === "main") {
             $bodyText .= renderSnippetAtlas($snippetCatalog);
@@ -44,10 +55,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SympSnip: <?php echo(escapeHtml($pageTitle)); ?></title>
-<link rel="stylesheet" href="code/styles.css">
+<link rel="stylesheet" href="<?php echo(escapeHtml($stylesHref)); ?>">
 
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
-<script defer src="code/search.js"></script>
+<script defer src="<?php echo(escapeHtml($searchScriptSrc)); ?>"></script>
   </head>
 <body>
 <?php include("code/preambles/mathpreamble.php"); ?>
